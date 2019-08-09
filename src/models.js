@@ -1,38 +1,48 @@
 import { v4 as uuid } from 'uuid';
 
-import { relationship, add, primaryKey } from "./store";
-import { computed, observable } from 'mobx';
+import { relationship, addOne, primaryKey, removeOne, truncateCollection } from "./store";
+import { computed } from 'mobx';
+
+export class SpamModel {
+    @primaryKey
+    id = uuid();
+}
 
 export class BarModel {
     @primaryKey
     id = uuid()
+
+    @relationship(() => SpamModel, { cascade: true })
+    spams = []
 }
 
 export class FooModel {
     @primaryKey
     id = uuid()
-
-    @observable
+    
     @relationship(type => BarModel)
     friends = [];
 
     @computed
-    get friendIds() {
-      console.log(this)
-      return this.friends.map(friend => friend.id);
+    get spamIds() {
+      return this.friends.flatMap(friend => friend.spams);
     }
 
 }
 
 const f = new FooModel();
-add(f);
-console.log(f);
-
-// setInterval(() => {
-//     add(new FooModel())
-// }, 1000);
+addOne(f);
+const b = new BarModel();
+f.friends.push(b);
+console.log(BarModel, truncateCollection)
 
 setInterval(() => {
-    f.friends.push(new BarModel())
-    console.log(f.friends)
-}, 500);
+    const b = new BarModel();
+    b.spams.push(new SpamModel(), new SpamModel(), new SpamModel(), new SpamModel());
+    f.friends.push(b);
+}, 1);
+
+
+setInterval(() => {
+    truncateCollection(BarModel);
+}, 10000);

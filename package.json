@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@ducharmemp/mobstr": "^0.2.0",
     "customize-cra": "^0.4.1",
     "mobx": "^5.13.0",
     "mobx-react": "^6.1.1",

@@ -4,18 +4,17 @@ import './App.css';
 
 import { trace } from 'mobx';
 
-import { find } from './store';
+import { findAll } from './store';
 import { FooModel } from './models';
 
 import { observer } from 'mobx-react';
 
 function App() {
-  console.log(find(FooModel).flatMap(model => model.friendIds));
   trace();
   return (
     <div className="App">
       <header className="App-header">
-        <div>{JSON.stringify(find(FooModel).flatMap(model => model.friendIds))}</div>
+        <div>{JSON.stringify(findAll(FooModel).flatMap(model => model.spamIds).length)}</div>
       </header>
     </div>
   );

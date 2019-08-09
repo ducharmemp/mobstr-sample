@@ -1,8 +1,11 @@
-import { initialize } from 'mobxt';
+import createStore from '@ducharmemp/mobstr';
 
 export const {
-    add,
-    find,
+    addOne,
+    findAll,
     primaryKey,
     relationship,
-} = initialize();
+    removeOne,
+    truncateCollection,
+} = createStore();
+console.log(createStore())
